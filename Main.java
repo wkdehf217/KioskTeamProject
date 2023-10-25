@@ -9,7 +9,7 @@ public class Main {
         // 버거 메뉴 0~99
         List<Items> menu = new ArrayList<>();
         menu.add(0, new Items("ShackBurger",
-                "토마토, 양상추, 쉑소스가 토핑된 치즈버거",
+                "토마토, 양상추, 쉑소스가 토핑된 치즈버거!!!",
                 6900));
         menu.add(1, new Items("SmokeShack",
                 "애플 우드 칩으로 훈연한 베이컨, 매콤한 체리 페퍼에 쉐소스가 토핑된 치즈 버거",
