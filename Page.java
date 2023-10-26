@@ -2,7 +2,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Page {
-
+    // hanjoon : 스캐너 값을 int로 치환하기 위한 코드
+    Scanner scanner = new Scanner(System.in);
+    private String inputString;
+    private int input;
+    // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     String mainPage = """
             ====================================================
              
@@ -88,13 +92,26 @@ public class Page {
             
             ===============================================================================================
             """;
-
+    // hanjoon : 사용자가 입력한 값을 int로 바꿔주는 함수
+    public static int kioskScanner(String scantest) {
+        int num = 0;
+        if(scantest.equals("kiosk")){
+          return -2;
+        } else if (scantest != null && scantest.matches("[-+]?\\d*\\.?\\d+")) {
+            num = Integer.parseInt(scantest);
+        } else {
+            return -1;
+        }
+        return num;
+    }
+    // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     public void mainPageMethod(List<Items> itemsList, List<Items> orderList) {
-        Scanner scanner = new Scanner(System.in);
         System.out.println(mainPage);
         System.out.print(">");
-        int input = scanner.nextInt();
-
+        // hanjoon : 스캐너 값을 int로 치환하기 위한 코드
+        inputString = scanner.next();
+        input = kioskScanner(inputString);
+        // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
         switch (input) {
             case 1:
                 burgerPageMethod(itemsList, orderList);
@@ -114,13 +131,30 @@ public class Page {
             case 6:
                 System.out.println("[ 프로그램을 종료합니다... ]");
                 break;
+            // hanjoon : 잘못 입력 시 오류처리 / "kiosk" 입력 시 관리자 페이지 / default 값 설정
+            case -1:
+                System.out.println("[ 잘못된 문자 입력... ]");
+                mainPageMethod(itemsList,orderList);
+                break;
+            case -2:
+                System.out.println("관리자 페이지 출력 부분");
+                mainPageMethod(itemsList,orderList);
+                break;
+            default:
+                System.out.println("[ 잘못된 문자 입력... ]");
+                mainPageMethod(itemsList,orderList);
+                break;
+            // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
         }
     }
     public void burgerPageMethod(List<Items> itemsList, List<Items> orderList) {
-        Scanner scanner = new Scanner(System.in);
+        //Scanner scanner = new Scanner(System.in);
         System.out.println(burgerPage);
         System.out.print(">");
-        int input = scanner.nextInt();
+        // hanjoon : 스캐너 값을 int로 치환하기 위한 코드
+        inputString = scanner.next();
+        input = kioskScanner(inputString);
+        // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
         switch (input) {
             case 1:
@@ -139,6 +173,18 @@ public class Page {
                 break;
             case 9:
                 mainPageMethod(itemsList, orderList);
+                break;
+            case -1:
+                System.out.println("[ 잘못된 문자 입력... ]");
+                burgerPageMethod(itemsList,orderList);
+                break;
+            case -2:
+                System.out.println("관리자 페이지 출력 부분");
+                mainPageMethod(itemsList,orderList);
+                break;
+            default:
+                System.out.println("[ 잘못된 문자 입력... ]");
+                burgerPageMethod(itemsList,orderList);
                 break;
         }
     }
