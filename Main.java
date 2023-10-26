@@ -161,12 +161,11 @@ public class Main {
         System.out.print("음식 설명(String): ");
         String description = scanner.nextLine();
         System.out.print("가격(long): ");
-        long price = scanner.nextLong();
+        long price = scanner.nextLong();   //////////////////이거 long타입 아니어도 오류 안뜨게 도움 받아서 바꿔볼 것
         scanner.nextLine();
         System.out.print("음식 ID(String): ");
         String id = scanner.nextLine();
 
-        // 입력을 모두 받은 후에 addMenuCheck() 호출돼야하는데 왜 ""입력되면서 실행????????????????????????????????????????????????????????
         addMenuCheck(category, name, description, price, id);
     }
 
@@ -186,7 +185,7 @@ public class Main {
             addMenu();
         } else if (yesOrNo.equals("3")) {
             System.out.println("취소 되었습니다.");
-            //첫 화면 실행 메서드 복붙!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            //첫 화면 실행 메서드 복붙!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         } else {
             System.out.println("다시 입력하세요.");
             addMenuCheck(category,name,description,price,id);
@@ -208,9 +207,6 @@ public class Main {
 
     public void delMenuCheck(String id) {
 
-        //이녀석이 제일 먼저 실행되도록 join() 메서드 사용
-            Thread yourThread = new Thread(() -> {
-                // 스레드가 수행할 작업
                 for(Map.Entry<String, Items> entry : menuAndID.entrySet()) {
                     if (entry.getKey().equals(id)) {
                         System.out.println("정말 삭제 하시겠습니까?");
@@ -222,25 +218,16 @@ public class Main {
                             menuAndID.remove(id);
                             categoryID.remove(id);
                             System.out.println("메뉴가 삭제되었습니다\n");
+                            delMenu();///////////////////////////////////////////첫화면으로 가는 메서드로 바꾸기
                         } else if (yesOrNo.equals("2")) {
-                            System.out.println("취소되었습니다.");
+                            System.out.println("취소되었습니다.\n");
+                            delMenu();////////////////////////////////////////첫화면으로 가는 메서드로 바꾸기
                         } else {
                             System.out.println("다시 입력하세요.");
                             delMenuCheck(id);
                         }
-                        //첫화면 실행 메서드!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     }
                 }
-            });
-
-            //스레드 시작
-            yourThread.start();
-            try {
-                // yourThread 스레드가 완료될 때까지 현재 스레드를 일시 중단
-                yourThread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
 
 
         System.out.println("ID가 일치하지 않습니다.\n");
