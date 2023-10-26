@@ -210,12 +210,20 @@ public class Page {
             }
             System.out.printf("\n주문금액 : %d\n", sum);
             System.out.println("[ 1.주문하기 | 2.메뉴추가 ]");
-
+            System.out.print(">"); //rinye
             int input = scanner.nextInt();
+
             switch (input) {
                 case 1:
-                    System.out.println(+sum+" 원 결제 도와드리겠습니다."); //rinye:고객주문금액으로 출력해서 결제받기
+                    System.out.println(" 요청사항이 있으신가요?");
+                    System.out.print(">"); //rinye
+                    Scanner scanner2 = new Scanner(System.in); //rinye. 요청사항 입력받기 -225
+                    String userMessage = scanner2.nextLine();
+                    String confMessage = userMessage.substring(0,20);
+                    System.out.println(confMessage);
+                    System.out.println("요청사항 반영하겠습니다! "+sum+"원 결제 도와드리겠습니다."); //rinye:고객주문금액으로 출력해서 결제받기
                     System.out.print(">");
+
                     long payment = scanner.nextLong();
                     if (sum > payment) {
                         System.out.println("금액이 부족합니다");
