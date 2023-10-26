@@ -105,6 +105,36 @@ public class Page {
         return num;
     }
     // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    // hanjoon : 메소드 하나로 뭉치기
+    public void printAllMethod(List<Items> itemsList, List<Items> orderList,int input) {
+        // 고른 메뉴에 있는 item들 목록을 보여줌
+        /*for (int i = 0; i < itemsList.size(); i++) { // 메뉴 Array 로 바뀐다면 실행될것?
+            System.out.println(i + 1 + ". " + String.format("%-17s", itemsList.get(input-1).name) +
+                    " | " + "W " + itemsList.get(input-1).price +
+                    " | " + itemsList.get(input-1).description;
+        }
+
+        // 다시 메뉴 안에 있는 item을 고르게 함
+        System.out.println("상품을 고르시오");
+
+        //System.out.println(burgerPage);
+        System.out.print(">");
+        inputString = scanner.next();
+        int iteminput = kioskScanner(inputString);
+
+        // 상품 객체 길이
+        int productLength;
+        productLength = itemsList.size();    // 아이템리스트 길이
+
+        // 제대로 선택했을 때 고른 item 출력
+        if (iteminput <= productLength && iteminput != 0 && iteminput != -1) {
+
+            System.out.println("\"" + String.format("%-17s", itemsList[input - 1].product[iteminput - 1].name) +
+                    " | " + "W " + String.format("%.1f", itemsList[input - 1].product[iteminput - 1].price) +
+                    " | " + itemsList[input - 1].product[iteminput - 1].explanation + "\"");
+
+        }*/
+    }
     public void mainPageMethod(List<Items> itemsList, List<Items> orderList) {
         System.out.println(mainPage);
         System.out.print(">");
@@ -115,6 +145,7 @@ public class Page {
         switch (input) {
             case 1:
                 burgerPageMethod(itemsList, orderList);
+                //printAllMethod(itemsList,orderList,input);
                 break;
             case 2:
                 frozenCustardPageMethod(itemsList, orderList);
