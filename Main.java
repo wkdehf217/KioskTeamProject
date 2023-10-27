@@ -147,5 +147,11 @@ public class Main {
         System.out.println("ID가 일치하지 않습니다.\n");
         delMenu();
     }
+
+    public static void main(String[] args) {
+        Page page = new Page();
+        page.initPage();
+    }
+
 }
 
