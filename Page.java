@@ -1,11 +1,11 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
+import java.util.*;
+import java.util.Map.Entry;
 public class Page {
-
-
-
+    // hanjoon : 스캐너 값을 int로 치환하기 위한 코드
+    Scanner scanner = new Scanner(System.in);
+    private String inputString;
+    private int input;
+    // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     String mainPage = """
             ====================================================
              
@@ -42,10 +42,10 @@ public class Page {
             7. Order       | 장바구니를 확인 후 주문합니다.
             8. Cancel      | 진행중인 주문을 취소합니다.
                                 
-            9. 첫 화면으로 돌아가기!
+            9. 뒤로 가기
             
             ==============================================================================
-            """; //rinye:9.문구수정
+            """;
     String frozenCustardPage = """
             ===============================================================================================
              
@@ -64,11 +64,10 @@ public class Page {
             7. Order       | 장바구니를 확인 후 주문합니다.
             8. Cancel      | 진행중인 주문을 취소합니다.
                                 
-            9. 첫 화면으로 돌아가기!
+            9. 뒤로 가기
             
             ===============================================================================================
-            """; //rinye:9.문구수정
-
+            """;
     String drinkPage = """
             ===============================================================================================
              
@@ -88,51 +87,91 @@ public class Page {
             8. Order       | 장바구니를 확인 후 주문합니다.
             9. Cancel      | 진행중인 주문을 취소합니다.
                                 
-            10. 첫 화면으로 돌아가기!
+            10. 뒤로 가기
             
             ===============================================================================================
-            """; //rinye:10.문구수정
-
-    public void totalOrderMethod(){
-        List<Items> totalList = new ArrayList<Items>();
-        totalList.toString();
-        System.out.println("주문현황"+totalList);
+            """;
+    // hanjoon : 사용자가 입력한 값을 int로 바꿔주는 함수
+    public static int kioskScanner(String scantest) {
+        int num = 0;
+        if(scantest.equals("kiosk")){
+            return -2;
+        } else if (scantest != null && scantest.matches("[-+]?\\d*\\.?\\d+")) {
+            num = Integer.parseInt(scantest);
+        } else {
+            return -1;
+        }
+        return num;
     }
 
+    // hanjoon : 메소드 하나로 뭉치기
+    public void printAllMethod(Map<String,Items> menuAndID, Map<String, String> categoryID ,List<Items> orderList,int input) {
+        // 고른 메뉴에 있는 item들 목록을 보여줌
+        String inputToString = Integer.toString(input);
+        int i = 0;
+        for (Entry<String, String> elem : categoryID.entrySet()) {
+            if (elem.getValue().equals(inputToString)) {
+                System.out.println(i+1+". "+String.format("%-15s",menuAndID.get(elem.getKey()).name)+ "  |   "+String.format("%-15s",menuAndID.get(elem.getKey()).description)+ "  |   "+String.format("%-15s",menuAndID.get(elem.getKey()).price));
+                i++;
+            }
+        }
+        menuAndID.remove("burger_1");
+        categoryID.remove("burger_1");
 
-    //메소드 작성해서 order 출력되도록
-    public void mainPageMethod(List<Items> itemsList, List<Items> orderList) {
-        Scanner scanner = new Scanner(System.in);
+
+        categoryID.put("burger_1","1");
+        menuAndID.put("burger_1",new Items("hh","ss",500));
+
+        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+        int ia = 0;
+        for (Entry<String, String> elem : categoryID.entrySet()) {
+            if (elem.getValue().equals(inputToString)) {
+                System.out.println(ia+1+". "+String.format("%-15s",menuAndID.get(elem.getKey()).name)+ "  |   "+String.format("%-15s",menuAndID.get(elem.getKey()).description)+ "  |   "+String.format("%-15s",menuAndID.get(elem.getKey()).price));
+                ia++;
+            }
+        }
+        //orderlist에다가 추가만 해주면 끝!
+    }
+    public void mainPageMethod(Map<String,Items> menuAndID,Map<String, String> categoryID, List<Items> orderList) {
         System.out.println(mainPage);
         System.out.print(">");
-        int input = scanner.nextInt();
+        // hanjoon : 스캐너 값을 int로 치환하기 위한 코드
+        inputString = scanner.next();
+        input = kioskScanner(inputString);
 
-        switch (input) {
-            case 1:
-                burgerPageMethod(itemsList, orderList);
-                break;
-            case 2:
-                frozenCustardPageMethod(itemsList, orderList);
-                break;
-            case 3:
-                drinkPageMethod(itemsList, orderList);
-                break;
-            case 4:
-                cartPage(itemsList, orderList);
-                break;
+        // hanjoon
+        printAllMethod(menuAndID,categoryID,orderList,input);
+         /*
             case 5:
-                orderClear(itemsList, orderList);
+                //orderClear(itemsList, orderList);
                 break;
             case 6:
                 System.out.println("[ 프로그램을 종료합니다... ]");
                 break;
-        }
+            // hanjoon : 잘못 입력 시 오류처리 / "kiosk" 입력 시 관리자 페이지 / default 값 설정
+            case -1:
+                System.out.println("[ 잘못된 문자 입력... ]");
+                mainPageMethod(menuAndID,categoryID,orderList);
+                break;
+            case -2:
+                System.out.println("관리자 페이지 출력 부분");
+                mainPageMethod(menuAndID,categoryID,orderList);
+                break;
+            default:
+                System.out.println("[ 잘못된 문자 입력... ]");
+                mainPageMethod(menuAndID,categoryID,orderList);
+                break;
+            // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+        }*/
     }
     public void burgerPageMethod(List<Items> itemsList, List<Items> orderList) {
-        Scanner scanner = new Scanner(System.in);
+        //Scanner scanner = new Scanner(System.in);
         System.out.println(burgerPage);
         System.out.print(">");
-        int input = scanner.nextInt();
+        // hanjoon : 스캐너 값을 int로 치환하기 위한 코드
+        inputString = scanner.next();
+        input = kioskScanner(inputString);
+        // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
         switch (input) {
             case 1:
@@ -150,7 +189,19 @@ public class Page {
                 orderClear(itemsList, orderList);
                 break;
             case 9:
-                mainPageMethod(itemsList, orderList);
+                //mainPageMethod(itemsList, orderList);
+                break;
+            case -1:
+                System.out.println("[ 잘못된 문자 입력... ]");
+                burgerPageMethod(itemsList,orderList);
+                break;
+            case -2:
+                System.out.println("관리자 페이지 출력 부분");
+                //mainPageMethod(itemsList,orderList);
+                break;
+            default:
+                System.out.println("[ 잘못된 문자 입력... ]");
+                burgerPageMethod(itemsList,orderList);
                 break;
         }
     }
@@ -159,8 +210,6 @@ public class Page {
         System.out.println(frozenCustardPage);
         System.out.print(">");
         int input = scanner.nextInt();
-//        ArrayList totalOrder = new ArrayList(orderList);
-//        System.out.println("주문내역 확인:"+ orderList);
 
         switch (input) {
             case 1:
@@ -178,7 +227,7 @@ public class Page {
                 orderClear(itemsList, orderList);
                 break;
             case 9:
-                mainPageMethod(itemsList, orderList);
+                //mainPageMethod(itemsList, orderList);
                 break;
         }
     }
@@ -205,7 +254,7 @@ public class Page {
                 orderClear(itemsList, orderList);
                 break;
             case 10:
-                mainPageMethod(itemsList, orderList);
+                //mainPageMethod(itemsList, orderList);
                 break;
         }
     }
@@ -223,27 +272,12 @@ public class Page {
             }
             System.out.printf("\n주문금액 : %d\n", sum);
             System.out.println("[ 1.주문하기 | 2.메뉴추가 ]");
-            System.out.print(">"); //rinye
-            int input = scanner.nextInt();
-            //원래 이곳에서
 
+            int input = scanner.nextInt();
             switch (input) {
                 case 1:
-
-
-                    System.out.println(" 요청사항이 있으신가요?");
-                    System.out.print(">"); //rinye
-
-                    Scanner scanner2 = new Scanner(System.in);//rinye. 요청사항 입력받기 -225
-                    String userMessage = scanner2.nextLine();
-                    String confMessage = userMessage.substring(0,20);
-                    //System.out.println(confMessage);
-
-                    //rinye:고객주문금액으로 출력해서 결제받기 및 대기번호 부여
-                    System.out.println("요청사항 반영하겠습니다! "+sum+"원 결제 도와드리겠습니다. 대기번호는 # 입니다."); //대기번호 받기 해야함
+                    System.out.println("카드를 아래와 같이 넣어주세요");
                     System.out.print(">");
-
-
                     long payment = scanner.nextLong();
                     if (sum > payment) {
                         System.out.println("금액이 부족합니다");
@@ -255,33 +289,31 @@ public class Page {
                     } else if (sum <= payment) {
                         System.out.println("주문해 주셔서 감사합니다");
                         System.out.println();
-                        System.out.println();
                         orderList.clear();
                         try {
                             Thread.sleep(2000);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
-                        mainPageMethod(itemsList, orderList);
+                        //mainPageMethod(itemsList, orderList);
                         break;
                     }
                 case 2:
-                    mainPageMethod(itemsList, orderList);
+                    //mainPageMethod(itemsList, orderList);
                     break;
             }
 
         } else {
-        System.out.println("장바구니가 비어있습니다");
+            System.out.println("장바구니가 비어있습니다");
             System.out.println();
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        mainPageMethod(itemsList, orderList);
+            //mainPageMethod(itemsList, orderList);
         }
     }
-
 
     // 장바구니 초기화
     public void orderClear(List<Items> itemsList, List<Items> orderList) {
@@ -293,7 +325,7 @@ public class Page {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        mainPageMethod(itemsList, orderList);
+        //mainPageMethod(itemsList, orderList);
     }
 
     public void addBurger(int input,List<Items> itemsList, List<Items> orderList) {
