@@ -5,6 +5,7 @@ public class Page {
     Scanner scanner = new Scanner(System.in);
     private String inputString;
     private int input;
+    private HashMap<String, String> menu;
     private HashMap<String, Items> menuAndID;
     private HashMap<String, String> categoryID;
     List<Items> orderList;
@@ -133,38 +134,36 @@ public class Page {
         input = kioskScanner(inputString);
 
 
-        //menuAndID.remove("burger_1");
-        //categoryID.remove("burger_1");
-        //categoryID.put("burger_1","1");
-        //menuAndID.put("burger_1",new Items("hh","ss",500));
-
-
-
-        //orderlist에다가 추가만 해주면 끝!
-
+        // orderlist에다가 추가만 해주면 끝!
 
     }
 
+    public void printMainPage(Map<String,Items> menuAndID, Map<String, String> categoryID ,Map<String,String> menu) {
+        int i = 0;
+        for (Entry<String, String> elem : categoryID.entrySet()) {
 
+                System.out.println(i+1+". "+String.format("%-15s",menuAndID.get(elem.getKey()).name)+ "  |   "+String.format("%-15s",menuAndID.get(elem.getKey()).description)+ "  |   "+String.format("%-15s",menuAndID.get(elem.getKey()).price));
+                i++;
 
+        }
+    }
 
     public void initPage() {
         menuAndID = new HashMap<>();
         categoryID = new HashMap<>();
         orderList = new ArrayList<>();
+        menu = new HashMap<>();
+
+        menu.put("1","Burgers");
+        menu.put("2","Forzen Custard");
+        menu.put("3","Drinks");
 
         menuAndID.put("burger_1", new Items("ShackBurger", "토마토, 양상추, 쉑소스가 토핑된 치즈버거!!!", 6900));
         menuAndID.put("burger_2", new Items("SmokeShack", "애플 우드 칩으로 훈연한 베이컨, 매콤한 체리 페퍼에 쉐소스가 토핑된 치즈 버거", 8900));
         menuAndID.put("burger_3", new Items("ShroomBurger", "몬스터 치즈와 체다 치즈로 속을 채우고 바삭하게 뒤겨낸 포토벨로 버섯 패티에 양상추, 토마토, 쇅소스를 올린 베지테리안 버거", 9400));
-        menuAndID.put("burger_4", new Items("Shack Stack",
-                "슈룸 버거와 쉑버거의 맛을 한번에 즐길 수 있는 메뉴",
-                12400));
-        menuAndID.put("burger_5", new Items("Cheeseburger",
-                "포테이토 번과 비프패티, 치즈가 토핑된 치즈버거",
-                6900));
-        menuAndID.put("burger_6", new Items("Hamburger",
-                "포테이토 번과 비프패티를 기본으로 신선한 양상추, 토마토 피클, 양파 토핑을 취향에 따라 선택할 수 있는 버거",
-                5400));
+        menuAndID.put("burger_4", new Items("Shack Stack", "슈룸 버거와 쉑버거의 맛을 한번에 즐길 수 있는 메뉴", 12400));
+        menuAndID.put("burger_5", new Items("Cheeseburger", "포테이토 번과 비프패티, 치즈가 토핑된 치즈버거", 6900));
+        menuAndID.put("burger_6", new Items("Hamburger", "포테이토 번과 비프패티를 기본으로 신선한 양상추, 토마토 피클, 양파 토핑을 취향에 따라 선택할 수 있는 버거", 5400));
 
         menuAndID.put("drink_1", new Items("Shake", "바닐라, 초콜렛, 솔티드 카라멜, 블랙& 화이트, 스트로베리, 피넛버터, 커피", 5900));
         menuAndID.put("drink_2", new Items("Shake of the Week", "특별한 커스터드 플레이버", 6500));
@@ -202,21 +201,19 @@ public class Page {
         categoryID.put("dessert_6", "3");
         categoryID.put("dessert_7", "3");
 
-        mainPageMethod(menuAndID,categoryID, orderList);
+        mainPageMethod(menuAndID,categoryID, orderList,menu);
     }
 
-
-
-
-    public void mainPageMethod(Map<String,Items> menuAndID,Map<String, String> categoryID, List<Items> orderList) {
+    public void mainPageMethod(Map<String,Items> menuAndID,Map<String, String> categoryID, List<Items> orderList,Map<String,String> menu) {
+        printMainPage(menuAndID,categoryID,menu);
         System.out.println(mainPage);
         System.out.print(">");
         // hanjoon : 스캐너 값을 int로 치환하기 위한 코드
         inputString = scanner.next();
         input = kioskScanner(inputString);
-
-
         // hanjoon
+
+
         printAllMethod(menuAndID,categoryID,orderList,input);
          /*
             case 5:
