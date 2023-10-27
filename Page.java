@@ -5,8 +5,8 @@ public class Page {
     Scanner scanner = new Scanner(System.in);
     private String inputString;
     private int input;
-    private HashMap<String, Items> menuAndID;
-    private HashMap<String, String> categoryID;
+    private Map<String, Items> menuAndID;
+    private Map<String, String> categoryID;
     List<Items> orderList;
 
 
@@ -479,14 +479,15 @@ public class Page {
         Scanner scanner = new Scanner(System.in);
         String yesOrNo = scanner.nextLine();
         if (yesOrNo.equals("1")) {
-            Main.menuAndID.put(id, new Items(name, description, price));
-            Main.categoryID.put(id, category);
+            menuAndID.put(id, new Items(name, description, price));
+            categoryID.put(id, category);
             System.out.println("메뉴가 추가되었습니다.\n");
+            mainPageMethod(menuAndID,categoryID, orderList);
         } else if (yesOrNo.equals("2")) {
             addMenu();
         } else if (yesOrNo.equals("3")) {
             System.out.println("취소 되었습니다.");
-            //첫 화면 실행 메서드 복붙!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            mainPageMethod(menuAndID,categoryID, orderList);
         } else {
             System.out.println("다시 입력하세요.");
             addMenuCheck(category,name,description,price,id);
@@ -498,7 +499,7 @@ public class Page {
         System.out.println("메뉴 삭제 페이지");
         System.out.println("삭제 할 음식의 ID를 입력하세요.\n");
 
-        for (Map.Entry<String, Items> entry : Main.menuAndID.entrySet()) {
+        for (Map.Entry<String, Items> entry : menuAndID.entrySet()) {
             System.out.println(entry.getValue().name + " | ID:" + entry.getKey());
         }
 
@@ -508,7 +509,7 @@ public class Page {
 //재현
     public void delMenuCheck(String id) {
 
-        for(Map.Entry<String, Items> entry : Main.menuAndID.entrySet()) {
+        for(Map.Entry<String, Items> entry : menuAndID.entrySet()) {
             if (entry.getKey().equals(id)) {
                 System.out.println("정말 삭제 하시겠습니까?");
                 System.out.println("1. 삭제  2. 취소");
@@ -516,13 +517,13 @@ public class Page {
                 Scanner scanner = new Scanner(System.in);
                 String yesOrNo = scanner.nextLine();
                 if (yesOrNo.equals("1")) {
-                    Main.menuAndID.remove(id);
-                    Main.categoryID.remove(id);
+                    menuAndID.remove(id);
+                    categoryID.remove(id);
                     System.out.println("메뉴가 삭제되었습니다\n");
-                    delMenu();///////////////////////////////////////////첫화면으로 가는 메서드로 바꾸기
+                    mainPageMethod(menuAndID,categoryID, orderList);
                 } else if (yesOrNo.equals("2")) {
                     System.out.println("취소되었습니다.\n");
-                    delMenu();////////////////////////////////////////첫화면으로 가는 메서드로 바꾸기
+                    mainPageMethod(menuAndID,categoryID, orderList);
                 } else {
                     System.out.println("다시 입력하세요.");
                     delMenuCheck(id);
