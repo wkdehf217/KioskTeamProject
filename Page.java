@@ -115,22 +115,29 @@ public class Page {
                 i++;
             }
         }
-        menuAndID.remove("burger_1");
-        categoryID.remove("burger_1");
+
+        // 중복된 value값을 다 출력하고 order가 나오게?
+        System.out.println();
+        System.out.println("[ ORDER MENU ]");
+        System.out.println(i+1+". Order    |     장바구니를 확인 후 주문합니다.");
+        System.out.println(i+2+". Cancle   |     진행중인 주문을 취소합니다.");
+        System.out.println();
+        System.out.println(i+3+". 뒤로 가기");
+        System.out.print(">");
+        inputString = scanner.next();
+        input = kioskScanner(inputString);
 
 
-        categoryID.put("burger_1","1");
-        menuAndID.put("burger_1",new Items("hh","ss",500));
+        //menuAndID.remove("burger_1");
+        //categoryID.remove("burger_1");
+        //categoryID.put("burger_1","1");
+        //menuAndID.put("burger_1",new Items("hh","ss",500));
 
-        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-        int ia = 0;
-        for (Entry<String, String> elem : categoryID.entrySet()) {
-            if (elem.getValue().equals(inputToString)) {
-                System.out.println(ia+1+". "+String.format("%-15s",menuAndID.get(elem.getKey()).name)+ "  |   "+String.format("%-15s",menuAndID.get(elem.getKey()).description)+ "  |   "+String.format("%-15s",menuAndID.get(elem.getKey()).price));
-                ia++;
-            }
-        }
+
+
         //orderlist에다가 추가만 해주면 끝!
+
+
     }
     public void mainPageMethod(Map<String,Items> menuAndID,Map<String, String> categoryID, List<Items> orderList) {
         System.out.println(mainPage);
@@ -138,6 +145,7 @@ public class Page {
         // hanjoon : 스캐너 값을 int로 치환하기 위한 코드
         inputString = scanner.next();
         input = kioskScanner(inputString);
+
 
         // hanjoon
         printAllMethod(menuAndID,categoryID,orderList,input);

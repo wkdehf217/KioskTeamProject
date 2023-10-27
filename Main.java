@@ -14,15 +14,9 @@ public class Main {
             menuAndID.put("burger_1", new Items("ShackBurger", "토마토, 양상추, 쉑소스가 토핑된 치즈버거!!!", 6900));
             menuAndID.put("burger_2", new Items("SmokeShack", "애플 우드 칩으로 훈연한 베이컨, 매콤한 체리 페퍼에 쉐소스가 토핑된 치즈 버거", 8900));
             menuAndID.put("burger_3", new Items("ShroomBurger", "몬스터 치즈와 체다 치즈로 속을 채우고 바삭하게 뒤겨낸 포토벨로 버섯 패티에 양상추, 토마토, 쇅소스를 올린 베지테리안 버거", 9400));
-            menuAndID.put("burger_4", new Items("Shack Stack",
-                    "슈룸 버거와 쉑버거의 맛을 한번에 즐길 수 있는 메뉴",
-                    12400));
-            menuAndID.put("burger_5", new Items("Cheeseburger",
-                    "포테이토 번과 비프패티, 치즈가 토핑된 치즈버거",
-                    6900));
-            menuAndID.put("burger_6", new Items("Hamburger",
-                    "포테이토 번과 비프패티를 기본으로 신선한 양상추, 토마토 피클, 양파 토핑을 취향에 따라 선택할 수 있는 버거",
-                    5400));
+            menuAndID.put("burger_4", new Items("Shack Stack","슈룸 버거와 쉑버거의 맛을 한번에 즐길 수 있는 메뉴", 12400));
+            menuAndID.put("burger_5", new Items("Cheeseburger","포테이토 번과 비프패티, 치즈가 토핑된 치즈버거", 6900));
+            menuAndID.put("burger_6", new Items("Hamburger","포테이토 번과 비프패티를 기본으로 신선한 양상추, 토마토 피클, 양파 토핑을 취향에 따라 선택할 수 있는 버거",5400));
 
             menuAndID.put("drink_1", new Items("Shake", "바닐라, 초콜렛, 솔티드 카라멜, 블랙& 화이트, 스트로베리, 피넛버터, 커피", 5900));
             menuAndID.put("drink_2", new Items("Shake of the Week", "특별한 커스터드 플레이버", 6500));
@@ -38,8 +32,6 @@ public class Main {
             menuAndID.put("dessert_5", new Items("Abita Root Beer", "청량감 있는 독특한 미국식 무알콜 단산음료", 4400));
             menuAndID.put("dessert_6", new Items("Bottled Water", "지리산 암반대수층으로 만든 프리미엄 생수", 1000));
             menuAndID.put("dessert_7", new Items("ShackMeister Ale", "쉐이크쉑 버거를 위해 뉴욕 브루클린 브루어리에서 특별히 양조한 에일 맥주", 9800));
-
-
 
         //이거로 출력 메서드 만들기 --> categoryID의 밸류가 burger이면 burger메뉴화면에 출력
         //추가 할 때도 여기에 추가하는 메서드를 만들면
@@ -62,6 +54,7 @@ public class Main {
         categoryID.put("dessert_5", "3");
         categoryID.put("dessert_6", "3");
         categoryID.put("dessert_7", "3");
+
 //주문 시작 지점
         List<Items> orderList =  new ArrayList<>();
         Page start = new Page();
