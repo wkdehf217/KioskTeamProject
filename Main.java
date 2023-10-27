@@ -241,8 +241,6 @@ public class Main {
 
         System.out.println("ID가 일치하지 않습니다.\n");
         delMenu();
-
->>>>>>> dev
     }
 }
 
