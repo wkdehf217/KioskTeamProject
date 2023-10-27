@@ -9,3 +9,4 @@ push는 따로 해야하나
 리드미 또 바꿈
 
 pull pullrequest
+
