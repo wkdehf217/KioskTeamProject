@@ -339,7 +339,7 @@ public class Page {
     // 장바구니 페이지
     public void cartPage(List<Items> itemsList, List<Items> orderList) {
         Scanner scanner = new Scanner(System.in);
-        long sum = 0; // 주문금액 값 초기화
+        int sum = 0; // 주문금액 값 초기화
 
         System.out.println("[ 장바구니 ]");
         if (!orderList.isEmpty()) {
@@ -445,7 +445,7 @@ public class Page {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("메뉴 추가 페이지\n");
-        System.out.println("음식 카테고리(String), 음식 이름(String), 음식 설명(String), 가격(long), 음식 ID(String)을 입력합니다.");
+        System.out.println("음식 카테고리(String), 음식 이름(String), 음식 설명(String), 가격(int), 음식 ID(String)을 입력합니다.");
 
         System.out.print("음식 카테고리(String): ");
         String category = scanner.nextLine();
@@ -453,16 +453,24 @@ public class Page {
         String name = scanner.nextLine();
         System.out.print("음식 설명(String): ");
         String description = scanner.nextLine();
-        System.out.print("가격(long): ");
-        long price = scanner.nextLong();   //////////////////이거 long타입 아니어도 오류 안뜨게 도움 받아서 바꿔볼 것
-        scanner.nextLine();
+        System.out.print("가격(int): ");
+        //타입이 int가 아닐 경우 프로그램이 종료되는 문제를 해결하기 위해 한준님의 함수를 응용 -> int로 입력되지 않으면 다시 입력 반복
+        String priceString = scanner.nextLine();
+        int price = kioskScanner(priceString);
+        while (price==-1) {
+            System.out.println("잘못된 입력입니다.");
+            System.out.print("다시 입력해주세요.");
+            System.out.print("가격(int): ");
+            priceString = scanner.nextLine();
+            price = kioskScanner(priceString);
+        }
         System.out.print("음식 ID(String): ");
         String id = scanner.nextLine();
 
         addMenuCheck(category, name, description, price, id);
     }
 //재현
-    public void addMenuCheck(String category, String name, String description, long price, String id) {
+    public void addMenuCheck(String category, String name, String description, int price, String id) {
 
         System.out.println("이 내용으로 추가 하시겠습니까?");
         System.out.println("카테고리: " + category + ", 이름: " + name + ", 설명: " + description + ", 가격: " + price + ", ID: " + id + "\n");
