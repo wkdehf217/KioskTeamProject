@@ -553,9 +553,11 @@ public class Page {
                     //while (menuAndID.values().remove(null));
                     //while (categoryID.values().remove(null));
                     mainPageMethod(menuAndID,categoryID, orderList,menu);
+                    mainPageMethod(menuAndID,categoryID, orderList);
                 } else if (yesOrNo.equals("2")) {
                     System.out.println("취소되었습니다.\n");
                     mainPageMethod(menuAndID,categoryID, orderList,menu);
+                    mainPageMethod(menuAndID,categoryID, orderList);
                 } else {
                     System.out.println("다시 입력하세요.");
                     delMenuCheck(id);
