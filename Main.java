@@ -55,12 +55,12 @@ public class Main {
         // 주문 목록 리스트 생성
        // List<Items> orderList = new ArrayList<Items>();
 
-        List<Items> orderList = new ArrayList<Items>();
+        List<Items> orderList =  new ArrayList<>();
+
 
         //주문 시작 지점
         Page start = new Page();
 
-        start.totalOrderMethod();
         start.mainPageMethod(menu, orderList);
 
 
