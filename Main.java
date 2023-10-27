@@ -139,10 +139,19 @@ public class Main {
         menu.add(205, new Items("Bottled Water", "지리산 암반대수층으로 만든 프리미엄 생수", 1000));
         menu.add(206, new Items("ShackMeister Ale", "쉐이크쉑 버거를 위해 뉴욕 브루클린 브루어리에서 특별히 양조한 에일 맥주", 9800));
 
-        // 주문 목록 리스트 생성
-        List<Items> orderList = new ArrayList<>();
+
+
+        List<Items> orderList =  new ArrayList<>();
+
+
         //주문 시작 지점
         Page start = new Page();
+<<<<<<< HEAD
+
+        start.mainPageMethod(menu, orderList);
+
+
+=======
         start.mainPageMethod(menu, orderList);*/
 
     }
@@ -233,6 +242,7 @@ public class Main {
         System.out.println("ID가 일치하지 않습니다.\n");
         delMenu();
 
+>>>>>>> dev
     }
 }
 
