@@ -53,10 +53,17 @@ public class Main {
         menu.add(206, new Items("ShackMeister Ale", "쉐이크쉑 버거를 위해 뉴욕 브루클린 브루어리에서 특별히 양조한 에일 맥주", 9800));
 
         // 주문 목록 리스트 생성
-        List<Items> orderList = new ArrayList<>();
+       // List<Items> orderList = new ArrayList<Items>();
+
+        List<Items> orderList = new ArrayList<Items>();
+
         //주문 시작 지점
         Page start = new Page();
+
+        start.totalOrderMethod();
         start.mainPageMethod(menu, orderList);
+
+
     }
 }
 

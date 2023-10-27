@@ -1,7 +1,10 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Page {
+
+
 
     String mainPage = """
             ====================================================
@@ -90,6 +93,14 @@ public class Page {
             ===============================================================================================
             """; //rinye:10.문구수정
 
+    public void totalOrderMethod(){
+        List<Items> totalList = new ArrayList<Items>();
+        totalList.toString();
+        System.out.println("주문현황"+totalList);
+    }
+
+
+    //메소드 작성해서 order 출력되도록
     public void mainPageMethod(List<Items> itemsList, List<Items> orderList) {
         Scanner scanner = new Scanner(System.in);
         System.out.println(mainPage);
@@ -148,6 +159,8 @@ public class Page {
         System.out.println(frozenCustardPage);
         System.out.print(">");
         int input = scanner.nextInt();
+//        ArrayList totalOrder = new ArrayList(orderList);
+//        System.out.println("주문내역 확인:"+ orderList);
 
         switch (input) {
             case 1:
@@ -212,17 +225,24 @@ public class Page {
             System.out.println("[ 1.주문하기 | 2.메뉴추가 ]");
             System.out.print(">"); //rinye
             int input = scanner.nextInt();
+            //원래 이곳에서
 
             switch (input) {
                 case 1:
+
+
                     System.out.println(" 요청사항이 있으신가요?");
                     System.out.print(">"); //rinye
-                    Scanner scanner2 = new Scanner(System.in); //rinye. 요청사항 입력받기 -225
+
+                    Scanner scanner2 = new Scanner(System.in);//rinye. 요청사항 입력받기 -225
                     String userMessage = scanner2.nextLine();
                     String confMessage = userMessage.substring(0,20);
-                    System.out.println(confMessage);
-                    System.out.println("요청사항 반영하겠습니다! "+sum+"원 결제 도와드리겠습니다."); //rinye:고객주문금액으로 출력해서 결제받기
+                    //System.out.println(confMessage);
+
+                    //rinye:고객주문금액으로 출력해서 결제받기 및 대기번호 부여
+                    System.out.println("요청사항 반영하겠습니다! "+sum+"원 결제 도와드리겠습니다. 대기번호는 # 입니다."); //대기번호 받기 해야함
                     System.out.print(">");
+
 
                     long payment = scanner.nextLong();
                     if (sum > payment) {
@@ -234,6 +254,7 @@ public class Page {
                         }
                     } else if (sum <= payment) {
                         System.out.println("주문해 주셔서 감사합니다");
+                        System.out.println();
                         System.out.println();
                         orderList.clear();
                         try {
@@ -260,6 +281,7 @@ public class Page {
         mainPageMethod(itemsList, orderList);
         }
     }
+
 
     // 장바구니 초기화
     public void orderClear(List<Items> itemsList, List<Items> orderList) {
