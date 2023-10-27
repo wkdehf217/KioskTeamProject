@@ -6,23 +6,7 @@ public class Main {
     public static Map<String, Items> menuAndID = new HashMap<>();
     public static Map<String, String> categoryID = new HashMap<>();
 
-    public static void main(String[] args) {
-        // 버거 메뉴   ->  전체메뉴 menuAndID<ID,Items> , 카테고리묶는 맵<ID,카테고리>
-        // 음료 메뉴   ->
-        // 디저트 메뉴 ->
 
-
-
-
-
-        //이거로 출력 메서드 만들기 --> categoryID의 밸류가 burger이면 burger메뉴화면에 출력
-        //추가 할 때도 여기에 추가하는 메서드를 만들면
-
-//주문 시작 지점
-        List<Items> orderList =  new ArrayList<>();
-        Page start = new Page();
-        start.mainPageMethod(menuAndID,categoryID,orderList);
-    }
 
     public void addMenu() {
 
@@ -110,5 +94,11 @@ public class Main {
         System.out.println("ID가 일치하지 않습니다.\n");
         delMenu();
     }
+
+    public static void main(String[] args) {
+        Page page = new Page();
+        page.initPage();
+    }
+
 }
 

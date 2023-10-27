@@ -7,6 +7,7 @@ public class Page {
     private int input;
     private HashMap<String, Items> menuAndID;
     private HashMap<String, String> categoryID;
+    List<Items> orderList;
 
 
     // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
@@ -143,6 +144,7 @@ public class Page {
     public void initPage() {
         menuAndID = new HashMap<>();
         categoryID = new HashMap<>();
+        orderList = new ArrayList<>();
 
         menuAndID.put("burger_1", new Items("ShackBurger", "토마토, 양상추, 쉑소스가 토핑된 치즈버거!!!", 6900));
         menuAndID.put("burger_2", new Items("SmokeShack", "애플 우드 칩으로 훈연한 베이컨, 매콤한 체리 페퍼에 쉐소스가 토핑된 치즈 버거", 8900));
@@ -192,6 +194,8 @@ public class Page {
         categoryID.put("dessert_5", "3");
         categoryID.put("dessert_6", "3");
         categoryID.put("dessert_7", "3");
+
+        mainPageMethod(menuAndID,categoryID, orderList);
     }
 
 
