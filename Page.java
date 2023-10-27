@@ -5,6 +5,7 @@ public class Page {
     Scanner scanner = new Scanner(System.in);
     private String inputString;
     private int input;
+    private List<String> menu;
     private Map<String, Items> menuAndID;
     private Map<String, String> categoryID;
     List<Items> orderList;
@@ -114,10 +115,12 @@ public class Page {
         // 고른 메뉴에 있는 item들 목록을 보여줌
         String inputToString = Integer.toString(input);
         int i = 0;
+        List<String> nowCategory = new ArrayList<>();
         for (Entry<String, String> elem : categoryID.entrySet()) {
             if (elem.getValue().equals(inputToString)) {
                 System.out.println(i+1+". "+String.format("%-15s",menuAndID.get(elem.getKey()).name)+ "  |   "+String.format("%-15s",menuAndID.get(elem.getKey()).description)+ "  |   "+String.format("%-15s",menuAndID.get(elem.getKey()).price));
                 i++;
+                nowCategory.add(elem.getKey());
             }
         }
 
@@ -130,41 +133,59 @@ public class Page {
         System.out.println(i+3+". 뒤로 가기");
         System.out.print(">");
         inputString = scanner.next();
-        input = kioskScanner(inputString);
+        int choice = kioskScanner(inputString);
+        String[] splitCategory = nowCategory.get(0).split("_");
+        String result = splitCategory[0];
+        String combine = result + "_"+Integer.toString(choice);
+        orderList.add(0,menuAndID.get(combine));
 
+        cartPage(menuAndID,orderList);
 
-        //menuAndID.remove("burger_1");
-        //categoryID.remove("burger_1");
-        //categoryID.put("burger_1","1");
-        //menuAndID.put("burger_1",new Items("hh","ss",500));
-
-
-
-        //orderlist에다가 추가만 해주면 끝!
-
+        // orderlist에다가 추가만 해주면 끝!
 
     }
 
-
-
+    public void printMainPage(List<String> menu) {
+        String mainPageShake = """
+            ====================================================
+             
+             "SHAKESHACK BURGER 에 오신걸 환영합니다."
+             아래 메뉴판을 보시고 메뉴를 골라 입력해주세요.
+                            
+            [ SHAKESHACK MENU ]
+            """;
+        String mainPageOrder = """
+            [ ORDER MENU ]
+            """;
+        int a = 0;
+        System.out.println(mainPageShake);
+        for(int i=0;i<menu.size();i++){
+            System.out.println(a+1+". "+menu.get(i));
+            a++;
+        }
+        System.out.println(mainPageOrder);
+        System.out.println(a+1+". Order       | 장바구니를 확인 후 주문합니다.");
+        System.out.println(a+2+". Cancel      | 진행중인 주문을 취소합니다.");
+        System.out.println(a+3+". 프로그램 종료");
+        System.out.println("====================================================");
+    }
 
     public void initPage() {
-        menuAndID = new HashMap<>();
-        categoryID = new HashMap<>();
+        menuAndID = new LinkedHashMap<>();
+        categoryID = new LinkedHashMap<>();
         orderList = new ArrayList<>();
+        menu = new ArrayList<>();
+
+        menu.add(String.format("%-15s","Burgers"+"     |    앵거스 비프 통살을 다져만든 버거"));
+        menu.add(String.format("%-15s","Forzen Custard"+"     |    매장에서 신선하게 만드는 아이스크림"));
+        menu.add(String.format("%-15s","Drinks"+"     |    매장에서 직접 만드는 음료"));
 
         menuAndID.put("burger_1", new Items("ShackBurger", "토마토, 양상추, 쉑소스가 토핑된 치즈버거!!!", 6900));
         menuAndID.put("burger_2", new Items("SmokeShack", "애플 우드 칩으로 훈연한 베이컨, 매콤한 체리 페퍼에 쉐소스가 토핑된 치즈 버거", 8900));
         menuAndID.put("burger_3", new Items("ShroomBurger", "몬스터 치즈와 체다 치즈로 속을 채우고 바삭하게 뒤겨낸 포토벨로 버섯 패티에 양상추, 토마토, 쇅소스를 올린 베지테리안 버거", 9400));
-        menuAndID.put("burger_4", new Items("Shack Stack",
-                "슈룸 버거와 쉑버거의 맛을 한번에 즐길 수 있는 메뉴",
-                12400));
-        menuAndID.put("burger_5", new Items("Cheeseburger",
-                "포테이토 번과 비프패티, 치즈가 토핑된 치즈버거",
-                6900));
-        menuAndID.put("burger_6", new Items("Hamburger",
-                "포테이토 번과 비프패티를 기본으로 신선한 양상추, 토마토 피클, 양파 토핑을 취향에 따라 선택할 수 있는 버거",
-                5400));
+        menuAndID.put("burger_4", new Items("Shack Stack", "슈룸 버거와 쉑버거의 맛을 한번에 즐길 수 있는 메뉴", 12400));
+        menuAndID.put("burger_5", new Items("Cheeseburger", "포테이토 번과 비프패티, 치즈가 토핑된 치즈버거", 6900));
+        menuAndID.put("burger_6", new Items("Hamburger", "포테이토 번과 비프패티를 기본으로 신선한 양상추, 토마토 피클, 양파 토핑을 취향에 따라 선택할 수 있는 버거", 5400));
 
         menuAndID.put("drink_1", new Items("Shake", "바닐라, 초콜렛, 솔티드 카라멜, 블랙& 화이트, 스트로베리, 피넛버터, 커피", 5900));
         menuAndID.put("drink_2", new Items("Shake of the Week", "특별한 커스터드 플레이버", 6500));
@@ -202,22 +223,24 @@ public class Page {
         categoryID.put("dessert_6", "3");
         categoryID.put("dessert_7", "3");
 
-        mainPageMethod(menuAndID,categoryID, orderList);
+        mainPageMethod(menuAndID,categoryID, orderList,menu);
     }
 
-
-
-
-    public void mainPageMethod(Map<String,Items> menuAndID,Map<String, String> categoryID, List<Items> orderList) {
-        System.out.println(mainPage);
+    public void mainPageMethod(Map<String,Items> menuAndID,Map<String, String> categoryID, List<Items> orderList,List<String> menu) {
+        printMainPage(menu);
+        //System.out.println(mainPage);
         System.out.print(">");
         // hanjoon : 스캐너 값을 int로 치환하기 위한 코드
         inputString = scanner.next();
         input = kioskScanner(inputString);
-
-
-        // hanjoon
-        printAllMethod(menuAndID,categoryID,orderList,input);
+        int maxMenuSize = menu.size();
+        if (input == maxMenuSize+1){
+            //cartPage();
+        }else if(input == maxMenuSize+2){
+            //delMenu();
+        }else {
+            printAllMethod(menuAndID,categoryID,orderList,input);
+        }
          /*
             case 5:
                 //orderClear(itemsList, orderList);
@@ -260,7 +283,7 @@ public class Page {
                 addBurger(input, itemsList,  orderList);
                 break;
             case 7:
-                cartPage(itemsList, orderList);
+                //cartPage(itemsList, orderList);
                 break;
             case 8:
                 orderClear(itemsList, orderList);
@@ -298,7 +321,7 @@ public class Page {
                 addFrozenCustard(input, itemsList, orderList);
                 break;
             case 7:
-                cartPage(itemsList, orderList);
+                //cartPage(itemsList, orderList);
                 break;
             case 8:
                 orderClear(itemsList, orderList);
@@ -325,7 +348,7 @@ public class Page {
                 addDrink(input, itemsList, orderList);
                 break;
             case 8:
-                cartPage(itemsList, orderList);
+                //cartPage(itemsList, orderList);
                 break;
             case 9:
                 orderClear(itemsList, orderList);
@@ -337,8 +360,15 @@ public class Page {
     }
 
     // 장바구니 페이지
-    public void cartPage(List<Items> itemsList, List<Items> orderList) {
-        Scanner scanner = new Scanner(System.in);
+    public void cartPage(Map<String,Items> itemsMap, List<Items> orderList) {
+        for (Items items : orderList){
+            System.out.println(items.name);
+        }
+
+        //addMenu();
+        //delMenu();
+
+        /*Scanner scanner = new Scanner(System.in);
         int sum = 0; // 주문금액 값 초기화
 
         System.out.println("[ 장바구니 ]");
@@ -389,7 +419,7 @@ public class Page {
                 throw new RuntimeException(e);
             }
             //mainPageMethod(itemsList, orderList);
-        }
+        }*/
     }
 
     // 장바구니 초기화
@@ -439,13 +469,13 @@ public class Page {
         drinkPageMethod(itemsList, orderList);
     }
 
-//재현
+    //재현
     public void addMenu() {
 
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("메뉴 추가 페이지\n");
-        System.out.println("음식 카테고리(String), 음식 이름(String), 음식 설명(String), 가격(int), 음식 ID(String)을 입력합니다.");
+        System.out.println("음식 카테고리(String), 음식 이름(String), 음식 설명(String), 가격(int), 음식 ID(카테고리_숫자)을 입력합니다.\n");
 
         System.out.print("음식 카테고리(String): ");
         String category = scanner.nextLine();
@@ -464,12 +494,12 @@ public class Page {
             priceString = scanner.nextLine();
             price = kioskScanner(priceString);
         }
-        System.out.print("음식 ID(String): ");
+        System.out.print("음식 ID(입력한 카테고리명_숫자): ");
         String id = scanner.nextLine();
 
         addMenuCheck(category, name, description, price, id);
     }
-//재현
+    //재현
     public void addMenuCheck(String category, String name, String description, int price, String id) {
 
         System.out.println("이 내용으로 추가 하시겠습니까?");
@@ -482,18 +512,18 @@ public class Page {
             menuAndID.put(id, new Items(name, description, price));
             categoryID.put(id, category);
             System.out.println("메뉴가 추가되었습니다.\n");
-            mainPageMethod(menuAndID,categoryID, orderList);
+            mainPageMethod(menuAndID,categoryID, orderList,menu);
         } else if (yesOrNo.equals("2")) {
             addMenu();
         } else if (yesOrNo.equals("3")) {
             System.out.println("취소 되었습니다.");
-            mainPageMethod(menuAndID,categoryID, orderList);
+            mainPageMethod(menuAndID,categoryID, orderList,menu);
         } else {
             System.out.println("다시 입력하세요.");
             addMenuCheck(category,name,description,price,id);
         }
     }
-//재현
+    //재현
     public void delMenu() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("메뉴 삭제 페이지");
@@ -506,7 +536,7 @@ public class Page {
         String inputID = scanner.nextLine();
         delMenuCheck(inputID);
     }
-//재현
+    //재현
     public void delMenuCheck(String id) {
 
         for(Map.Entry<String, Items> entry : menuAndID.entrySet()) {
@@ -520,9 +550,13 @@ public class Page {
                     menuAndID.remove(id);
                     categoryID.remove(id);
                     System.out.println("메뉴가 삭제되었습니다\n");
+                    //while (menuAndID.values().remove(null));
+                    //while (categoryID.values().remove(null));
+                    mainPageMethod(menuAndID,categoryID, orderList,menu);
                     mainPageMethod(menuAndID,categoryID, orderList);
                 } else if (yesOrNo.equals("2")) {
                     System.out.println("취소되었습니다.\n");
+                    mainPageMethod(menuAndID,categoryID, orderList,menu);
                     mainPageMethod(menuAndID,categoryID, orderList);
                 } else {
                     System.out.println("다시 입력하세요.");
@@ -530,7 +564,6 @@ public class Page {
                 }
             }
         }
-
 
         System.out.println("ID가 일치하지 않습니다.\n");
         delMenu();
